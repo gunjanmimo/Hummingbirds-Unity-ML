@@ -1,0 +1,25 @@
+﻿<Properties StartupConfiguration="{45C88475-E485-A286-1667-D4C75EF7E982}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Flower.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Flower.cs" Line="12" Column="23" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Hummingbirds-Unity-ML" expanded="True">
+            <Node name="Assets" expanded="True" selected="True">
+              <Node name="Scripts" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="23814678-a29e-4557-9d13-85c89d359f32" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
