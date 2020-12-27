@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Mangaes a single flower with nectar
 /// </summary>
-public class Flowe : MonoBehaviour
+public class Flower : MonoBehaviour
 {
     [Tooltip("The color when flower is full")]
     public Color fullFlowerColor = new Color(1f, 0f, 3f);
