@@ -20,7 +20,7 @@ public class FlowerArea : MonoBehaviour
     /// </summary>
     public List<Flower> Flowers { get; private set; }
 
-    public void ResetFlowe()
+    public void ResetFlowers()
     {
         // rotate each flower plant around the y axis and subtly around x and z
         foreach (GameObject flowerPlant in flowerPlants)
