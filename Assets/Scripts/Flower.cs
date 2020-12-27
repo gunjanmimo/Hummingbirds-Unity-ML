@@ -12,7 +12,7 @@ public class Flower : MonoBehaviour
     public Color fullFlowerColor = new Color(1f, 0f, 3f);
 
     [Tooltip("The color when flower is emepty")]
-    public Color emptyFlowerColor = new Color(1f, 0f, 3f);
+    public Color emptyFlowerColor = new Color(.5f, 0f, 1f);
 
     /// <summary>
     /// the tigger collider representing the nectar
