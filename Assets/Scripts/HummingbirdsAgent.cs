@@ -79,6 +79,22 @@ public class HummingbirdsAgent : Agent
         // recalculate the nearest flower now that agent has moved
         UpdateNearestFlower();
     }
+
+    /// <summary>
+    /// called when and action is received from either the player input or the neural network
+    /// vector[i] represent:
+    /// index 0: move vector x(+1=right, -1 = left)
+    /// index 1: move vector y(+1 = up,-1 = down)
+    /// index 2: move vector z(+1 = forward, -1 = backward)
+    /// index 3: pitch angle (+1 = pitch up,-1 = pitch down)
+    /// index 4: yaw angle (+1 = turn right, -1 = turn left)
+    /// </summary>
+    /// <param name="vectorAction">the actions to take</param>
+    public override void OnActionReceived(float[] vectorAction)
+    {
+        base.OnActionReceived(vectorAction);
+    }
+
     /// <summary>
     /// update the nearest the flower to the agent
     /// </summary>
