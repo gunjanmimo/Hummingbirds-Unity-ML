@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -122,6 +124,106 @@ public class HummingbirdsAgent : Agent
     }
 
     /// <summary>
+    /// collect vector observation from the environment
+    /// </summary>
+    /// <param name="sensor">the vector sensor</param>
+    public override void CollectObservations(VectorSensor sensor)
+    {
+        // If nearestFlower is null, observe an empty array and return early
+        if (nearestFlower == null)
+        {
+            sensor.AddObservation(new float[10]);
+            return;
+        }
+
+
+        // Observe the agent's local rotation (4 observations)
+        sensor.AddObservation(transform.localRotation.normalized);
+
+        // Get a vector from the beak tip to the nearest flower
+        Vector3 toFlower = nearestFlower.FlowerCenterPosition - beakTip.position;
+
+        // Observe a normalized vector pointing to the nearest flower (3 observations)
+        sensor.AddObservation(toFlower.normalized);
+
+        // Observe a dot product that indicates whether the beak tip is in front of the flower (1 observation)
+        // (+1 means that the beak tip is directly in front of the flower, -1 means directly behind)
+        sensor.AddObservation(Vector3.Dot(toFlower.normalized, -nearestFlower.FlowerUpVector.normalized));
+
+        // Observe a dot product that indicates whether the beak is pointing toward the flower (1 observation)
+        // (+1 means that the beak is pointing directly at the flower, -1 means directly away)
+        sensor.AddObservation(Vector3.Dot(beakTip.forward.normalized, -nearestFlower.FlowerUpVector.normalized));
+
+        // Observe the relative distance from the beak tip to the flower (1 observation)
+        sensor.AddObservation(toFlower.magnitude / FlowerArea.AreaDiameter);
+
+        // 10 total observations
+    }
+
+    /// <summary>
+    /// when behavior type is set to huristic only on the agent's behavior parameter,
+    /// the function will be called. it reture value will be into onActionRecives instead of using neural network
+    /// </summary>
+    /// <param name="actionsOut">an output action array</param>
+    public override void Heuristic(float[] actionsOut)
+    {
+        // create placeholders for all movement/turning
+        Vector3 forward = Vector3.zero;
+        Vector3 left = Vector3.zero;
+        Vector3 up = Vector3.zero;
+        float pitch = 0f;
+        float yaw = 0f;
+        if (Input.GetKey(KeyCode.W)) forward = transform.forward;
+        else if (Input.GetKey(KeyCode.S)) forward = -transform.forward;
+        // left /right
+        if (Input.GetKey(KeyCode.A)) left = -transform.right;
+        else if (Input.GetKey(KeyCode.D)) left = transform.right;
+
+        // up/down
+        if (Input.GetKey(KeyCode.E)) up = transform.up;
+        else if (Input.GetKey(KeyCode.C)) up = -transform.up;
+
+        // pitch up/down
+        if (Input.GetKey(KeyCode.UpArrow)) pitch = 1f;
+        else if (Input.GetKey(KeyCode.DownArrow)) pitch = -1f;
+
+        //yaw left/right 
+        if (Input.GetKey(KeyCode.LeftArrow)) yaw = 1f;
+        else if (Input.GetKey(KeyCode.RightArrow)) yaw = 1f;
+
+        // Combine the movement vectors and normalize
+        Vector3 combined = (forward + left + up).normalized;
+
+        // Add the 3 movement values, pitch, and yaw to the actionsOut array
+        actionsOut[0] = combined.x;
+        actionsOut[1] = combined.y;
+        actionsOut[2] = combined.z;
+        actionsOut[3] = pitch;
+        actionsOut[4] = yaw;
+
+    }
+
+
+    /// <summary>
+    /// Prevent the agent from moving and taking actions
+    /// </summary>
+    public void FreezeAgent()
+    {
+        Debug.Assert(trainingMode == false, "Freeze/Unfreeze not supported in training");
+        frozen = true;
+        PlayerRigidbody.Sleep();
+    }
+
+    /// <summary>
+    /// Resume agent movement and actions
+    /// </summary>
+    public void UnfreezeAgent()
+    {
+        Debug.Assert(trainingMode == false, "Freeze/Unfreeze not supported in training");
+        frozen = false;
+        PlayerRigidbody.WakeUp();
+    }
+    /// <summary>
     /// update the nearest the flower to the agent
     /// </summary>
     private void UpdateNearestFlower()
@@ -196,5 +298,79 @@ public class HummingbirdsAgent : Agent
         // set the position and rotation
         transform.position = potentialPosition;
         transform.rotation = potentialRotation;
+    }
+
+    /// <summary>
+    /// called when the agent's collider enters a tigger collider
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerEnter(Collider other)
+    {
+        TiggerEnterOrStay(other);
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        TiggerEnterOrStay(other);
+    }
+    /// <summary>
+    /// handles when the agents collider enters or stays in a trigger collider
+    /// </summary>
+    /// <param name="collider"></param>
+    private void TiggerEnterOrStay(Collider collider)
+    {
+        if (collider.CompareTag("nectar"))
+        {
+            Vector3 closestPointToBeakTip = collider.ClosestPoint(beakTip.position);
+            if (Vector3.Distance(beakTip.position, closestPointToBeakTip) < BeakTipRadius)
+            {
+                Flower flower = flowerArea.GetFlowerFromNectar(collider);
+                float nectarReceived = flower.Feed(0.01f);
+                NectarObtained += nectarReceived;
+                if (trainingMode)
+                {
+                    float bonus = 0.02f * Mathf.Clamp01(Vector3.Dot(transform.forward.normalized, -nearestFlower.FlowerUpVector.normalized));
+                    AddReward(0.01f + bonus);
+                }
+                // if flower is empty, update the nearest flower
+                if (!flower.HasNectar)
+                {
+                    UpdateNearestFlower();
+                }
+            }
+        }
+    }
+    /// <summary>
+    /// called when the agent collides with something solid
+    /// </summary>
+    /// <param name="collision">the collision info</param>
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (trainingMode && collision.collider.CompareTag("boundary"))
+        {
+            AddReward(-0.5f);
+        }
+    }
+
+    /// <summary>
+    /// called every frame
+    /// </summary>
+    private void Update()
+    {
+        // draw a line from the beak tip to the nearest flower
+        if (nearestFlower != null)
+        {
+            Debug.DrawLine(beakTip.position, nearestFlower.FlowerCenterPosition, Color.green);
+        }
+    }
+    /// <summary>
+    /// called every 0.02 sec
+    /// </summary>
+    private void FixedUpdate()
+    {
+        if (nearestFlower != null && !nearestFlower.HasNectar)
+        {
+            UpdateNearestFlower();
+
+        }
     }
 }
