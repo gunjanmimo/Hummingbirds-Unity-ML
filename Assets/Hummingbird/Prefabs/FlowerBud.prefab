@@ -594,7 +594,7 @@ GameObject:
   - component: {fileID: 6681288286164871134}
   - component: {fileID: 2441992179914825192}
   - component: {fileID: 8277400165238776081}
-  - component: {fileID: 579405750246114645}
+  - component: {fileID: 2068271163884236450}
   m_Layer: 0
   m_Name: Flower
   m_TagString: Untagged
@@ -670,7 +670,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &579405750246114645
+--- !u!114 &2068271163884236450
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -682,6 +682,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5902cb800f5f46e0a49882410a6b18b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullFlowerColor: {r: 1, g: 0, b: 3, a: 1}
-  emptyFlowerColor: {r: 0.32243425, g: 0, b: 0.9622642, a: 1}
+  fullFlowerColor: {r: 1, g: 0, b: 0.3, a: 1}
+  emptyFlowerColor: {r: 0.5, g: 0, b: 1, a: 1}
   nectarCollider: {fileID: 0}

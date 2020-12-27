@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SensorName: RaysUp
   m_DetectableTags:
-  - untagged
+  - Untagged
   - boundary
   m_RaysPerDirection: 0
   m_MaxRayDegrees: 60
@@ -211,9 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SensorName: RaysUp
+  m_SensorName: RayDown
   m_DetectableTags:
-  - untagged
+  - Untagged
   - boundary
   m_RaysPerDirection: 0
   m_MaxRayDegrees: 60
@@ -351,7 +351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SensorName: RaysForward
   m_DetectableTags:
-  - untagged
+  - Untagged
   - boundary
   m_RaysPerDirection: 3
   m_MaxRayDegrees: 60
@@ -457,6 +457,9 @@ GameObject:
   - component: {fileID: 5360331958300676797}
   - component: {fileID: 8011218750561675848}
   - component: {fileID: 2929057673994019871}
+  - component: {fileID: 151250469810919293}
+  - component: {fileID: 5346362273569848050}
+  - component: {fileID: 6042654689598690124}
   m_Layer: 0
   m_Name: Hummingbird
   m_TagString: Untagged
@@ -542,6 +545,68 @@ CapsuleCollider:
   m_Height: 0.03
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0.025}
+--- !u!114 &151250469810919293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8005050037668528862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BrainParameters:
+    VectorObservationSize: 10
+    NumStackedVectorObservations: 1
+    VectorActionSize: 05000000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 1
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 1
+  m_BehaviorType: 0
+  m_BehaviorName: Hummingbird
+  TeamId: 0
+  m_UseChildSensors: 1
+  m_UseChildActuators: 1
+  m_ObservableAttributeHandling: 0
+--- !u!114 &5346362273569848050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8005050037668528862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8548698e3083c40e6a5d1e336a01061b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 5000
+  moveForce: 2
+  pitchSpeed: 100
+  yawSpeed: 100
+  beakTip: {fileID: 749827769155012578}
+  agentCamera: {fileID: 7818838773794919427}
+  trainingMode: 1
+--- !u!114 &6042654689598690124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8005050037668528862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecisionPeriod: 5
+  TakeActionsBetweenDecisions: 1
 --- !u!1 &8942009205158470528
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,7 +634,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8942009205158470528}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.02, z: -0.02}
+  m_LocalPosition: {x: 0, y: 0.02, z: -0.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6434798618752004301}

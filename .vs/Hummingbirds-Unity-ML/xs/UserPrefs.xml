@@ -1,10 +1,11 @@
 ﻿<Properties StartupConfiguration="{45C88475-E485-A286-1667-D4C75EF7E982}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/HummingbirdsAgent.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../UNITY/ml-agents-release_10/com.unity.ml-agents/Runtime/Sensors/RayPerceptionSensor.cs">
     <Files>
       <File FileName="Assets/Scripts/Flower.cs" Line="15" Column="60" />
       <File FileName="Assets/Scripts/FlowerArea.cs" Line="23" Column="29" />
-      <File FileName="Assets/Scripts/HummingbirdsAgent.cs" Line="437" Column="1" />
       <File FileName="../../UNITY/ml-agents-release_10/com.unity.ml-agents/Runtime/Agent.cs" Line="956" Column="1" />
+      <File FileName="Assets/Scripts/HummingbirdAgent.cs" Line="410" Column="48" />
+      <File FileName="../../UNITY/ml-agents-release_10/com.unity.ml-agents/Runtime/Sensors/RayPerceptionSensor.cs" Line="481" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -12,22 +13,17 @@
           <Node name="Hummingbirds-Unity-ML" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="HummingbirdsAgent.cs" selected="True" />
+                <Node name="FlowerArea.cs" selected="True" />
               </Node>
             </Node>
           </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="Hummingbirds-Unity-ML" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="23814678-a29e-4557-9d13-85c89d359f32" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a85390fb-8ed1-480e-8efc-63e336d0c5b7" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

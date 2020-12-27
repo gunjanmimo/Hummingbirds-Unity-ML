@@ -1951,6 +1951,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8703149456917459529}
   - component: {fileID: 6493887233388658084}
+  - component: {fileID: 4079579619974895719}
   m_Layer: 0
   m_Name: FloatingIsland
   m_TagString: Untagged
@@ -1982,6 +1983,18 @@ Transform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6493887233388658084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4420374660899403437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60ea00342fc8c45b6a2b33e99bdbd39a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4079579619974895719
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -1,32 +1,34 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 /// <summary>
-/// Mangaes a single flower with nectar
+/// Manages a single flower with nectar
 /// </summary>
 public class Flower : MonoBehaviour
 {
-    [Tooltip("The color when flower is full")]
-    public Color fullFlowerColor = new Color(1f, 0f, 3f);
+    [Tooltip("The color when the flower is full")]
+    public Color fullFlowerColor = new Color(1f, 0f, .3f);
 
-    [Tooltip("The color when flower is emepty")]
+    [Tooltip("The color when the flower is empty")]
     public Color emptyFlowerColor = new Color(.5f, 0f, 1f);
 
     /// <summary>
-    /// the tigger collider representing the nectar
+    /// The trigger collider representing the nectar
     /// </summary>
     [HideInInspector]
     public Collider nectarCollider;
 
-    // the solid collider representing the petals
+    // The solid collider representing the flower petals
     private Collider flowerCollider;
 
-    // the flower's materials
+    // The flower's material
     private Material flowerMaterial;
 
-    /// a vector pointing straight out of the flower
+    /// <summary>
+    /// A vector pointing straight out of the flower
+    /// </summary>
     public Vector3 FlowerUpVector
     {
         get
@@ -34,8 +36,9 @@ public class Flower : MonoBehaviour
             return nectarCollider.transform.up;
         }
     }
+
     /// <summary>
-    /// the center position of the nectar collider
+    /// The center position of the nectar collider
     /// </summary>
     public Vector3 FlowerCenterPosition
     {
@@ -45,11 +48,13 @@ public class Flower : MonoBehaviour
         }
     }
 
-    //necter amount remaining in the flower
+    /// <summary>
+    /// The amount of nectar remaining in the flower
+    /// </summary>
     public float NectarAmount { get; private set; }
 
     /// <summary>
-    /// wheather flower has any nectar remaining
+    /// Whether the flower has any nectar remaining
     /// </summary>
     public bool HasNectar
     {
@@ -60,48 +65,61 @@ public class Flower : MonoBehaviour
     }
 
     /// <summary>
-    /// attempt to remove from the flower
+    /// Attempts to remove nectar from the flower
     /// </summary>
-    /// <param name="amount">the amount of nectar to remove </param>
-    /// <returns>the actual amount successfully removed</returns>
+    /// <param name="amount">The amount of nectar to remove</param>
+    /// <returns>The actual amount successfully removed</returns>
     public float Feed(float amount)
     {
-        // track how much nectar was successfully taken
+        // Track how much nectar was successfully taken (cannot take more than is available)
         float nectarTaken = Mathf.Clamp(amount, 0f, NectarAmount);
+
+        // Subtract the nectar
         NectarAmount -= amount;
+
         if (NectarAmount <= 0)
         {
+            // No nectar remaining
             NectarAmount = 0;
+
+            // Disable the flower and nectar colliders
             flowerCollider.gameObject.SetActive(false);
             nectarCollider.gameObject.SetActive(false);
 
-            //change the flower color to indicate that it is empty
+            // Change the flower color to indicate that it is empty
             flowerMaterial.SetColor("_BaseColor", emptyFlowerColor);
         }
+
+        // Return the amount of nectar that was taken
         return nectarTaken;
     }
 
     /// <summary>
-    /// reset the flower
+    /// Resets the flower
     /// </summary>
     public void ResetFlower()
     {
-        // refill the nectar
+        // Refill the nectar
         NectarAmount = 1f;
+
+        // Enable the flower and nectar colliders
         flowerCollider.gameObject.SetActive(true);
         nectarCollider.gameObject.SetActive(true);
 
-        //change the flower color to indicate that it is full
+        // Change the flower color to indicate that it is full
         flowerMaterial.SetColor("_BaseColor", fullFlowerColor);
     }
+
     /// <summary>
-    /// called when the flower wakes up
+    /// Called when the flower wakes up
     /// </summary>
     private void Awake()
     {
+        // Find the flower's mesh renderer and get the main material
         MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
         flowerMaterial = meshRenderer.material;
 
+        // Find flower and nectar colliders
         flowerCollider = transform.Find("FlowerCollider").GetComponent<Collider>();
         nectarCollider = transform.Find("FlowerNectarCollider").GetComponent<Collider>();
     }
