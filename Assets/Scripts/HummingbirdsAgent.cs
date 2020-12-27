@@ -92,7 +92,33 @@ public class HummingbirdsAgent : Agent
     /// <param name="vectorAction">the actions to take</param>
     public override void OnActionReceived(float[] vectorAction)
     {
-        base.OnActionReceived(vectorAction);
+        // don't take actions if frozen
+        if (frozen) return;
+        // calculate movement vector
+        Vector3 move = new Vector3(vectorAction[0], vectorAction[1], vectorAction[2]);
+
+        // add force in the direction of the move vector
+        PlayerRigidbody.AddForce(move * moveoForce);
+
+        // get the current position
+        Vector3 rotationVector = transform.rotation.eulerAngles;
+        // calculate pitch and yaw rotation
+        float pitchChange = vectorAction[3];
+        float yawChange = vectorAction[4];
+        // calculate smooth rotation changae
+        smoothPitchChange = Mathf.MoveTowards(smoothPitchChange, pitchChange, 2f * Time.fixedDeltaTime);
+        smoothYawchange = Mathf.MoveTowards(smoothYawchange, yawChange, 2f * Time.fixedDeltaTime);
+
+
+        //calculate new pitch and yaw based on smoothed values
+        // clamp pitch to avoid flipping upside down
+        float pitch = rotationVector.x + smoothPitchChange * Time.fixedDeltaTime * pitchSpeed;
+        if (pitch > 180f) pitch -= 360f;
+        pitch = Mathf.Clamp(pitch, -maxPitchAngle, maxPitchAngle);
+        float yaw = rotationVector.y + smoothYawchange * Time.fixedDeltaTime * yawSpeed;
+
+        // apply new rotation
+        transform.rotation = Quaternion.Euler(pitch, yaw, 0);
     }
 
     /// <summary>
