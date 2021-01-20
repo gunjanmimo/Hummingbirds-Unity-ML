@@ -10,6 +10,6 @@ The hummingbird agent is the main machine learning agent and the simulation envi
 
 The flower and the nectar has following structure 
 <div style="display: flex;">
-<img src="https://github.com/gunjanmimo/Hummingbirds-Unity-ML/blob/main/img/image1.png?raw=true" />
+<img src="https://github.com/gunjanmimo/Hummingbirds-Unity-ML/blob/main/img/image1.png?raw=true" style="width: 150px;" />
 <img src="https://github.com/gunjanmimo/Hummingbirds-Unity-ML/blob/main/img/image9.png?raw=true" />
 </div>
