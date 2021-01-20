@@ -5,6 +5,7 @@ These hummingbirds have six degrees of freedom, meaning they can fly and turn in
 
 ## **Environment:**
 ![](https://github.com/gunjanmimo/Hummingbirds-Unity-ML/blob/main/img/image12.png?raw=true)
+<center><em>fig 1: Unity Environment</em></center>
 
 The hummingbird agent is the main machine learning agent and the simulation environment has different kind of  obstacles for the agent. 
 
@@ -18,7 +19,11 @@ Left      | `A`     |Turn Left | `←`
 Right     | `D`     |Turn Right| `→`
 Up        | `E`     |
 Down      | `C`     |
+
+
 ![](https://www.matrixtsl.com/wikiv6/images/7/76/Eg_Pitch_Yaw_Roll.svg)
+
+<center><em>fig 2: pitch and yaw movement of flying object</em></center>
 
 
 ## **Game Mode:**
@@ -28,25 +33,28 @@ To Control the agent using keyboard, in **Behavior Parameter** change the **Beha
 
 
 In `Behavior Parameter` Change the `Behavior Type` of `Hummingbird` to `Default`.
-### 1. Running training
+### **1. Running training**
 
 `mlagents-learn ./config/trainer_config.yaml --run-id trainingAgent`
 
-### 2. Visualization
+### **2. Visualization**
 use `tensorboard --logdir ./config/summaries`
 
 ![](https://github.com/gunjanmimo/Hummingbirds-Unity-ML/blob/main/img/image3.png?raw=true)
 
- <em>``fig 1: Shows the training progression on the four games using ML-Agents in the Unity environment. Mean cumulative training reward across eight game instances PPO (8) orange. The x-axis denotes steps. Note that rewards and the y-axis are different for each game. The results clearly show learning progress across all eight games, in line with the baselines.``</em>
+<center><em>fig 3: Shows the training progression on the four games using ML-Agents in the Unity environment. Mean cumulative training reward across eight game instances PPO (8) orange. The x-axis denotes steps. Note that rewards and the y-axis are different for each game. The results clearly show learning progress across all eight games, in line with the baselines.</em></center>
+
 
 
 ![](https://github.com/gunjanmimo/Hummingbirds-Unity-ML/blob/main/img/image14.png?raw=true)
 
-<em>``fig 2: Shows that the Policy/Entropy curve is decreasing which means taking random decisions of the model slowly decrease during a successful training process. Policy/Extrinsic Reward, the mean cumulative reward received from the environment per-episode increases with training. Policy/Learning Rate, how large a step the training algorithm takes as it searches for the optimal policy  is decreasing with time being.``</em>
+<center><em>fig 4: Shows that the Policy/Entropy curve is decreasing which means taking random decisions of the model slowly decrease during a successful training process. Policy/Extrinsic Reward, the mean cumulative reward received from the environment per-episode increases with training. Policy/Learning Rate, how large a step the training algorithm takes as it searches for the optimal policy  is decreasing with time being.</em></center>
 
-### 3. Using Trained brain in Machine Learning Agent
+
+
+### **3. Using Trained brain in Machine Learning Agent**
 
 Use the `Hummingbird.nn` file in the directory specified in `--run-id` parameter during training as `Model` for `Hummingbird`'s `Behavior Parameter`. This `Hummingbird` is the Machine Learning agent against which the player will compete. For the Player `Hummingbird`, set `Behavior Type` to `Heuristic Only`.
 
-# Final result: 
+# **Final result:**
 <center><img src="https://github.com/gunjanmimo/Hummingbirds-Unity-ML/blob/main/img/video.gif?raw=true" /></center>
